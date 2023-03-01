@@ -21,6 +21,19 @@ public class UsersDB {
 		}
 	}
 	
-	// Create sets to update data.
-	// Add save to json???
+	public static void removeUser(String name) {
+		if (usersList.get(name) != null) {
+			usersList.remove(name);
+		}
+	}
+	
+	public static boolean loadUsers() {
+		
+		return true;
+	}
+	
+	public static boolean saveUsers() {
+		
+		return true;
+	}
 }
