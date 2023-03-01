@@ -10,7 +10,8 @@
 	<body>
 		<h1>Quiz</h1><br>
 		<form action="mainServlet">
-			<input name="flag" type="hidden" value="0">
+			<input type="text" name="userFlag" placeholder="Username">
+			<input type="hidden" name="answerFlag" value="0">
 			<button type="submit">Inizia</button>
 		</form>
 	</body>

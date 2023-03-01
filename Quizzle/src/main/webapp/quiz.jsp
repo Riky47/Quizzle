@@ -8,9 +8,10 @@
 	</head>
 
 	<body>
-		<h1>Quiz ${id}</h1><br>
+		<h1>Quiz ${answer_1}</h1><br>
 		<form action="mainServlet">
-			<input name="flag" type="hidden" value="${id}">
+			<input type="hidden" name="userFlag" value="${userFlag}">
+			<input type="hidden" name="answerFlag" value="${answer_1}">
 			<button type="submit">Inizia</button>
 		</form>
 	</body>
