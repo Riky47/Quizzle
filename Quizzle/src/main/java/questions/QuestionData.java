@@ -1,9 +1,10 @@
-package main;
+package questions;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Vector;
 
-public class QuestionData {
+public class QuestionData implements Serializable{
 	private int maxPoints = 0;
 	private String question = "";
 	
