@@ -74,8 +74,8 @@ public class MainServlet extends HttpServlet {
 			
 			quizPath = "quiz.jsp";	// Question Preset
 			req.setAttribute(key_username, userData.getUsername()); // Sets userid flag
-			req.setAttribute("question", "ciao");
 			req.setAttribute("answers", answers);
+			req.setAttribute("maxAnswers", 1);
 			
 			// Set quiz as already used form that userId, so it doesnt repeat.
 		}
