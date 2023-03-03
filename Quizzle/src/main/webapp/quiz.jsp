@@ -7,8 +7,8 @@
 		<script type="text/javascript">
 			window.addEventListener('load', function () {
 				var answersAttribute = "${answers}" // Load and parse answers Java vector
-				answersAttribute = attributes.replace("[", "")
-				answersAttribute = attributes.replace("]", "")
+				answersAttribute = answersAttribute.replace("[", "")
+				answersAttribute = answersAttribute.replace("]", "")
 
 				var index = 0
 				var buttons = [] // Stores answers buttons
