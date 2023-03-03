@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
@@ -11,24 +10,12 @@
 				attributes = attributes.replace("[", "")
 				attributes = attributes.replace("]", "")
 				
-				var index = 0;
+				var index = 0
+                		var buttons = []
 				var answers = attributes.split(",")
+                		var answersDiv = document.getElementById("answersDiv")
+                		var answerFlag = document.getElementById("answerFlag")
 				
-				var form = document.getElementById("mainForm")
-				var userFlag = document.createElement("Input")
-				userFlag.type = "hidden"
-				userFlag.name = "userFlag"
-				userFlag.value = "${userFlag}"
-				
-				var answerFlag = document.createElement("Input")
-				answerFlag.type = "hidden"
-				answerFlag.name = "answerFlag"
-				answerFlag.value = ""
-				
-				form.appendChild(userFlag)
-				form.appendChild(answerFlag)
-				
-				var buttons = []
 				answers.forEach(function(answer) {
 					var btn = document.createElement("Button")
 					btn.type = "button"
@@ -45,20 +32,21 @@
 					}
 					
 					buttons.push(btn)
-					form.appendChild(btn)
+					answersDiv.appendChild(btn)
 				})
-				
-				var sendBtn = document.createElement("Button")
-				sendBtn.type = "submit"
-				sendBtn.innerHTML = "Conferma"
-				
-				form.appendChild(sendBtn)
 			})
 		</script>	
 	</head>
 		<h1>Quiz</h1><br>
-		<form action="mainServlet" id="mainForm">
-			
+		<form action="mainServlet">
+            		<input type="hidden" name="userFlag" id="userFlag" value="${userFlag}">
+            		<input type="hidden" name="answerFlag" id="answerFlag" value="${answerFlag}">
+
+			<div id="answersDiv"></div>
+
+            		</div><br>
+
+            		<button type="submit">Conferma</button>
 		</form>
 	<body>
 	</body>
