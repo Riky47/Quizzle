@@ -1,7 +1,9 @@
 package questions;
 
 import java.util.LinkedList;
+
 import answers.Answer;
+import subjects.Subjects;
 
 /**
  * Classe per le domande.
@@ -12,16 +14,20 @@ public class Question{
 	
 	private int maxPoints = 0;
 	private String text = "";
+	private Subjects subject;
+
+	public static Question NULL = new Question(null, 0, null, null);
 	
 	private LinkedList<Answer> answers = new LinkedList<Answer>();
 	
 	/**
 	 * Costruttore, prende il testo della domanda, i punti massimi e una lista di risposte.
 	 */
-	public Question(String text, int maxPoints, LinkedList<Answer> answers) {
+	public Question(String text, int maxPoints, LinkedList<Answer> answers, Subjects subject) {
 		this.text = text;
 		this.maxPoints = maxPoints;
 		this.answers = answers;
+		this.subject = subject;
 	}
 	
 	/**
@@ -56,10 +62,19 @@ public class Question{
 		answers.add(answer);
 	}
 	
+	public Subjects getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subjects subject) {
+		this.subject = subject;
+	}
+	
 	@Deprecated
 	public void output() {
 		System.out.println("DOMANDA: "+getText());
 		System.out.println("PUNTI: "+getMaxPoints());
+		System.out.println("MATERIA: "+getSubject());
 		
 		answers.forEach(t -> t.output());
 	}

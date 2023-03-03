@@ -22,7 +22,6 @@ public class MainServlet extends HttpServlet {
 	private final String key_answerid = "answerFlag";
 	private final String key_subjectId = "subjectFlag";
 	private static UsersDB usersDB = new UsersDB();
-	
     /**
      * @see HttpServlet#HttpServlet()
      */

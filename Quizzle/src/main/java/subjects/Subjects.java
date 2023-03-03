@@ -2,13 +2,15 @@ package subjects;
 
 public enum Subjects {
 	
-	MATH,
-	HISTORY,
-	ENGLISH,
-	ITALIAN;
+	MATH("Matematica"),
+	HISTORY("Storia"),
+	MECHANIC("Meccanica"),
+	ITALIAN("Italiano");
 	
-	Subjects(){
-		
+	public String materia;
+	
+	Subjects(String materia){
+		this.materia = materia;
 	}
 
 }

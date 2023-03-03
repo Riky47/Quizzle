@@ -3,12 +3,15 @@ package questions;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import javax.security.auth.Subject;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import answers.Answer;
 import answers.JSONAnswer;
 import parser.JSONCustomParser;
+import subjects.Subjects;
 
 public class JSONQuestion {
 	
@@ -25,6 +28,7 @@ static JSONCustomParser p = new JSONCustomParser("Quizzle", "Question");
 		JSONObject questionDetails = new JSONObject();
         questionDetails.put("text", question.getText());
         questionDetails.put("maxPoints", question.getMaxPoints());
+        questionDetails.put("subject", question.getSubject().name());
         
         JSONArray answers = new JSONArray();
         question.getAnswers().forEach(t -> answers.add(JSONAnswer.parseJSONObject(t)));
@@ -64,13 +68,15 @@ static JSONCustomParser p = new JSONCustomParser("Quizzle", "Question");
         
         int p = Integer.parseInt(maxPoints); //Avendo castato a String possiamo parsare a int.
         
+        String m = (String) a.get("subject");
+        
         Object obj = a.get("answers");
         JSONArray ar = (JSONArray) obj;
         
         LinkedList<Answer> ans = new LinkedList<Answer>();
         ar.forEach(t -> ans.add(JSONAnswer.parseAnswerObject((JSONObject)t)));
         
-        return new Question((String)a.get("text"), p, ans); //Creiamo una nuova istanza di Question e mettiamo i valori ottenuti, poi la ritorniamo.
+        return new Question((String)a.get("text"), p, ans, Subjects.valueOf(m)); //Creiamo una nuova istanza di Question e mettiamo i valori ottenuti, poi la ritorniamo.
     }
 
 }
