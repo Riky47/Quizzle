@@ -3,9 +3,9 @@ package questions;
 import java.util.Vector;
 
 public class QuestionsDB {
-	private Vector<QuestionData> questionsList = new Vector<QuestionData>();
+	private Vector<Question> questionsList = new Vector<Question>();
 	
-	private void addQuestion(QuestionData data) {
+	private void addQuestion(Question data) {
 		questionsList.add(data);
 	}
 	

@@ -14,9 +14,11 @@ public class JSONCustomParser {
 	
 	public static String sp = File.separator;
 	private final String path;
+	private final String folder;
 	
-	public JSONCustomParser(String mainPath) {
+	public JSONCustomParser(String mainPath, String folder) {
 		this.path = root()+sp+mainPath;
+		this.folder = folder;
 	}
 	
 	public static String root(){
@@ -30,7 +32,6 @@ public class JSONCustomParser {
 	
 	
 	public void toJson(String fileName, JSONObject obj) throws IOException {
-		String folder = "Answer";
 		File d = new File(path+sp+folder+sp, fileName+".json");
 		d.getParentFile().mkdirs();
 		d.createNewFile();
@@ -47,7 +48,6 @@ public class JSONCustomParser {
 	
 	@SuppressWarnings("unchecked")
 	public JSONObject fromJson(String fileName) {
-		String folder = "Answer";
 		JSONParser jsonParser = new JSONParser();
 		
 		try (FileReader reader = new FileReader(path+sp+folder+sp+fileName+".json"))
