@@ -12,10 +12,7 @@ public class UsersDB {
 			return usersList.get(name);
 		}
 		else {
-			UserData newData = new UserData();
-			newData.setUserId(++totalUsers);
-			newData.setUsername(name);
-			
+			UserData newData = new UserData(++totalUsers, name);
 			usersList.put(name, newData);
 			return newData;
 		}

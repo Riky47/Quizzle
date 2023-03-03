@@ -11,7 +11,9 @@
 		<h1>Quiz</h1><br>
 		<form action="mainServlet">
 			<input type="text" name="userFlag" placeholder="Username">
-			<button type="submit">Inizia</button>
+			<input type="hidden" name="subjectFlag" id="subjectFlag" value="">
+			
+			<button type="submit">Start</button>
 		</form>
 	</body>
 </html>

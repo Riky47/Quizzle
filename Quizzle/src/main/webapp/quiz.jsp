@@ -13,13 +13,13 @@
 				var index = 0
 				var buttons = [] // Stores answers buttons
 				var maxAnswers = "${maxAnswers}" // Load maxAnswers Java integer
-						var answers = answersAttribute.split(",") // Parse
+				var answers = answersAttribute.split(",") // Parse
 				var answersDiv = document.getElementById("answersDiv")
 				var answerFlag = document.getElementById("answerFlag")
 
 				answers.forEach(function(answer) {
 					var btn = document.createElement("Button") // Create new answer button
-                    			btn.innerHTML = answer
+                    btn.innerHTML = answer
 					btn.type = "button"
 
 					let id = ++index; // Answer id
@@ -34,36 +34,36 @@
 						    var value = ""
 
 						    for (i=0; i<ids.length; i++) { // Check and parse flag value
-							var num = Number(ids[i])
-							if (typeof(num) == "number" && num > 0) {
-							    ids[i] = num
-							    if (num == id) { // Checks if the current id is already in
-								found = true
-							    }
-							}
-							else {
-							    ids.splice(i, 1)
-							    i--
-							}
+								var num = Number(ids[i])
+								if (typeof(num) == "number" && num > 0) {
+								    ids[i] = num
+								    if (num == id) { // Checks if the current id is already in
+									found = true
+								    }
+								}
+								else {
+								    ids.splice(i, 1)
+								    i--
+								}
 						    }
 
 						    if (!found) { // If id its not already selected
-							ids.push(id)
+								ids.push(id)
 						    }
 
 						    while (ids.length > maxAnswers) { // Delete olders
-							ids.shift()
+								ids.shift()
 						    }
 
 						    ids.forEach(function(answerId) { // Create new flag value
-							value += (value == "" ? "" : ",") + answerId
-							buttons[answerId -1].style.background = "#ff6666"
+								value += (value == "" ? "" : ",") + answerId
+								buttons[answerId -1].style.background = "#ff6666"
 						    })
 
 						    answerFlag.value = value
 						}
 						else {
-									    answerFlag.value = id // Change flag value
+							answerFlag.value = id // Change flag value
 						    btn.style.background = "#ff6666"
 						}
 					}
@@ -77,14 +77,14 @@
 	<body>	
 		<h1>Quiz</h1><br>
 		<form action="mainServlet">
-            		<input type="hidden" name="userFlag" id="userFlag" value="${userFlag}">
-            		<input type="hidden" name="answerFlag" id="answerFlag" value="">
+            <input type="hidden" name="userFlag" id="userFlag" value="${userFlag}">
+            <input type="hidden" name="answerFlag" id="answerFlag" value="">
 
 			<div id="answersDiv"></div>
 
-            		</div><br>
+            </div><br>
 
-            		<button type="submit">Conferma</button>
+            <button type="submit">Send</button>
 		</form>
 	</body>
 </html>
