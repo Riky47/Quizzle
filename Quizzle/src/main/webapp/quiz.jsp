@@ -16,6 +16,7 @@
 				var answers = answersAttribute.split(",") // Parse
 				var answersDiv = document.getElementById("answersDiv")
 				var answerFlag = document.getElementById("answerFlag")
+				var sendButton = document.getElementById("sendButton")
 
 				answers.forEach(function(answer) {
 					var btn = document.createElement("Button") // Create new answer button
@@ -50,9 +51,13 @@
 						    if (!found) { // If id its not already selected
 								ids.push(id)
 						    }
-
+							
 						    while (ids.length > maxAnswers) { // Delete olders
 								ids.shift()
+						    }
+							
+						    if (ids.length == maxAnswers) {
+						    	sendButton.type = "submit"
 						    }
 
 						    ids.forEach(function(answerId) { // Create new flag value
@@ -65,6 +70,7 @@
 						else {
 							answerFlag.value = id // Change flag value
 						    btn.style.background = "#ff6666"
+						    sendButton.type = "submit"
 						}
 					}
 					
@@ -84,7 +90,7 @@
 
             </div><br>
 
-            <button type="submit">Send</button>
+            <button type="button" id="sendButton">Send</button>
 		</form>
 	</body>
 </html>

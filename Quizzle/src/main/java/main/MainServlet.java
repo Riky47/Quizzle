@@ -25,10 +25,10 @@ public class MainServlet extends HttpServlet {
 	/*
 	 * 	 Data & Settings
 	 */
+	private static final int totQuestion = 10;
 	private final String key_username = "userFlag";		// Login page only
 	private final String key_answerid = "answerFlag";
 	private final String key_subjectId = "subjectFlag";
-	private static final int totQuestion = 10;
 	private static UsersDB usersDB = new UsersDB(totQuestion);
     /**
      * @see HttpServlet#HttpServlet()
@@ -93,12 +93,30 @@ public class MainServlet extends HttpServlet {
 			if (answersId.size() > 0) { // Checks if there is one or more answers
 				int questionId = userData.getCurrentQuestionId(); // Gets current question id
 				if (questionId > 0) { // Checks if there is a current question
-					// Save answer of the question or remove question from userData
+					Question question = userData.getQuestionAt(questionId);
+					int earnedPoints = 0;
+					
+					for (int answerId : answersId) { // Repeats for each answer from the client
+						Answer answer = question.getAnswers().get(answerId);
+						userData.setCorrectAnswer(questionId, answer);
+						
+						if (answer.isCorrect()) {
+							earnedPoints += question.getMaxPoints() / answersId.size(); // Set points
+							// TODO: add points, need a review
+						}
+						else {
+							earnedPoints += question.getMaxPoints() / answersId.size() / 10;
+ 							// TODO: add less points? need a review
+						}
+					};
+					
+					userData.incrementPoints(earnedPoints);
 				}
 			}
 			
 			subjectId = userData.getCurrentSubjectId(); // Get current subject
 			req.setAttribute(key_username, userData.getUsername()); // User flag is used in all the pages
+			System.out.println(userData.getPoints());
 			
 			if (subjectId == 0) { // If there is no subject selected
 				Vector<String> subjects = new Vector<String>();
@@ -111,25 +129,24 @@ public class MainServlet extends HttpServlet {
 				req.setAttribute("subjects", subjects);
 			}
 			else {
-				// TODO: Generate new random question and load html page.
-				
-				LinkedList<Answer> answerList = new LinkedList<Answer>();	// 
-				
-				answerList.add(new Answer("Ciao", false, 1));		// Load answers from the generated question
-				answerList.add(new Answer("alura mat", true, 2));
-				
-				Question question = new Question("Saluto migliore", 100, answerList, Subjects.ITALIAN); // Crea la domanda di esempio
-				
-				Vector<String> answerVector = new Vector<String>();
-				answerList.forEach((answer) -> answerVector.add(answer.getText()));
-				
-				quizPath = "quiz.jsp";	// Question Preset
-				req.setAttribute("answers", answerVector); // Sets all possible answers
-				req.setAttribute("maxAnswers", question.getNumberOfCorrectAnswer()); // Sets how many answers the client can return (multiple answers)
-				req.setAttribute("question", question.getText());
-				
-				// TODO: Set quiz as already used form that user, so it doesnt repeat.
-				// Example userData.addAnswer(answerId, questionId)
+				int questionId = userData.getNextQuestionId(); // Gets next question and sets the id
+				if (questionId == 0) { // Checks if user ended the quiz
+					// TODO: user ended the quiz
+					
+				}
+				else {	
+					userData.setCurrentQuestionId(questionId);
+					
+					Question question = userData.getQuestionAt(questionId);
+					Vector<String> answersList = new Vector<String>();
+					
+					question.getAnswers().forEach(answer -> answersList.add(answer.getText())); // Gets answers from the questions
+					
+					quizPath = "quiz.jsp";	// Question Preset
+					req.setAttribute("answers", answersList); // Sets all possible answers
+					req.setAttribute("maxAnswers", question.getNumberOfCorrectAnswer()); // Sets how many answers the client can return (multiple answers)
+					req.setAttribute("question", question.getText());
+				}
 			}
 		}
 		

@@ -13,7 +13,7 @@ public class UsersDB {
 			return usersList.get(name);
 		}
 		else {
-			UserData newData = new UserData(++totalUsers, name, 10);
+			UserData newData = new UserData(++totalUsers, name, totQuestion);
 			usersList.put(name, newData);
 			return newData;
 		}
@@ -36,9 +36,8 @@ public class UsersDB {
 	}
 	public UsersDB(int totQuestion)
 	{
-		this.totQuestion = totQuestion;
 		totalUsers = 0;
+		this.totQuestion = totQuestion;
 		usersList = new HashMap<String, UserData>();
-		
 	}
 }

@@ -5,15 +5,30 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Quizzle</title>
+		<script type="text/javascript">
+			window.addEventListener('load', function () {
+				var userbox = document.getElementById('userbox')
+				var sendButton = document.getElementById('sendButton')
+				
+				userbox.addEventListener('input', function() {
+					if (userbox.value == "") {
+						sendButton.type = "button"
+					}
+					else {
+						sendButton.type = "submit"
+					}
+				})
+			})
+		</script>
 	</head>
 
 	<body>
 		<h1>Quiz</h1><br>
 		<form action="mainServlet">
-			<input type="text" name="userFlag" placeholder="Username">
+			<input type="text" name="userFlag" id="userbox" placeholder="Username">
 			<input type="hidden" name="subjectFlag" id="subjectFlag" value="">
 			
-			<button type="submit">Start</button>
+			<button type="button" id="sendButton">Start</button>
 		</form>
 	</body>
 </html>

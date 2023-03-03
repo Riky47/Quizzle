@@ -9,7 +9,6 @@ public class Answer{
 
 	private String text;
 	private boolean isCorrect = false;
-	private int id = 0;
 	
 	/**
 	 * Costruttore della classe, prende il testo della risposta, se è corretta e l'id della risposta.
@@ -18,10 +17,9 @@ public class Answer{
 	 * @param isCorrect
 	 * @param id
 	 */
-	public Answer(String text, boolean isCorrect, int id) {
+	public Answer(String text, boolean isCorrect) {
 		this.text = text;
 		this.isCorrect = isCorrect;
-		this.id = id;
 	}
 	
 	/**
@@ -47,19 +45,11 @@ public class Answer{
 		return isCorrect;
 	}
 	
-	/**
-	 * Ritorna l'id della risposta.
-	 */
-	public int getId() {
-		return id;
-	}
-	
 	@Deprecated
 	public void output() {
 		System.out.println();
 		System.out.println("RISPOSTA: "+getText());
 		System.out.println("CORRETTA: "+isCorrect());
-		System.out.println("ID: "+getId());
 		System.out.println();
 	}
 

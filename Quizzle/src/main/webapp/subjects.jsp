@@ -13,6 +13,7 @@
 				
 				var subjectFlag = document.getElementById("subjectFlag")
 				var subjectsDiv = document.getElementById("subjectsDiv")
+				var sendButton = document.getElementById("sendButton")
 				var subjects = subjectsAttribute.split(",") // Parse
 				var buttons = [] // Stores the buttons
 				var index = 0
@@ -31,6 +32,7 @@
 						
 						subjectFlag.value = id
 						btn.style.background = "#ff6666"
+						sendButton.type = "submit"
 					}
 					
 					buttons.push(btn)
@@ -50,7 +52,7 @@
 			
 			</div><br>
 			
-			<button type="submit">Select</button>
+			<button type="button" id="sendButton">Select</button>
 		</form>
 	</body>
 </html>
