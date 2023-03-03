@@ -75,11 +75,11 @@
 		</script>	
 	</head>
 	<body>	
-		<h1>Quiz</h1><br>
+		<h1>${question}</h1><br>
 		<form action="mainServlet">
             <input type="hidden" name="userFlag" id="userFlag" value="${userFlag}">
             <input type="hidden" name="answerFlag" id="answerFlag" value="">
-
+	
 			<div id="answersDiv"></div>
 
             </div><br>

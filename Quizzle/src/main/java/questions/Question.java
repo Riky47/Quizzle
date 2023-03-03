@@ -31,6 +31,17 @@ public class Question{
 	}
 	
 	/**
+	 * Ritorna il numero di risposte corrette
+	 */
+	public int getNumberOfCorrectAnswer(){
+		int c = 0;
+		for(Answer answer : answers){
+			if (answer.isCorrect()) c++;
+		}
+		return c;
+	}
+	
+	/**
 	 * Ritorna il testo della domanda.
 	 */
 	public String getText() {
@@ -70,6 +81,7 @@ public class Question{
 		this.subject = subject;
 	}
 	
+
 	@Deprecated
 	public void output() {
 		System.out.println("DOMANDA: "+getText());
@@ -78,4 +90,6 @@ public class Question{
 		
 		answers.forEach(t -> t.output());
 	}
+	
+	
 }

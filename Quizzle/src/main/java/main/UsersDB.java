@@ -4,15 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UsersDB {
-	private static Map<String, UserData> usersList = new HashMap<String, UserData>();
-	private static int totalUsers = 0;
+	private static Map<String, UserData> usersList;
+	private static int totalUsers;
+	private static int totQuestion;
 	
 	public static UserData getUser(String name) {
 		if (usersList.get(name) != null) {
 			return usersList.get(name);
 		}
 		else {
-			UserData newData = new UserData(++totalUsers, name);
+			UserData newData = new UserData(++totalUsers, name, 10);
 			usersList.put(name, newData);
 			return newData;
 		}
@@ -32,5 +33,12 @@ public class UsersDB {
 	public static boolean saveUsers() {
 		
 		return true;
+	}
+	public UsersDB(int totQuestion)
+	{
+		this.totQuestion = totQuestion;
+		totalUsers = 0;
+		usersList = new HashMap<String, UserData>();
+		
 	}
 }
