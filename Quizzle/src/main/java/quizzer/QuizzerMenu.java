@@ -263,7 +263,7 @@ public class QuizzerMenu{
 	        		
 					added.setVisible(false);
 					added.setVisible(true);
-	        		Answer dp = new Answer(textField.getText(), correctField.isSelected(), 0);
+	        		Answer dp = new Answer(textField.getText(), correctField.isSelected());
 	        		
 	        		textField.setText(" ");
 	        		correctField.setText(" ");

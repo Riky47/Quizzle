@@ -49,7 +49,6 @@ public class JSONAnswer {
 		JSONObject answerDetails = new JSONObject();
         answerDetails.put("text", answer.getText());
         answerDetails.put("isCorrect", answer.isCorrect());
-        answerDetails.put("id", answer.getId());
          
         JSONObject answerObject = new JSONObject();
         answerObject.put("answer", answerDetails);
@@ -68,10 +67,6 @@ public class JSONAnswer {
         
         boolean b = Boolean.parseBoolean(c); //Avendo castato a String possiamo parsare a booleano.
         
-        String id = ""+a.get("id"); //Prendo la variabile "id" dal JSON e la casto a String.
-        
-        int i = Integer.parseInt(id); //Avendo castato a String possiamo parsare a int.
-        
-        return new Answer((String)a.get("text"), b, i); //Creiamo una nuova istanza di Answer e mettiamo i valori ottenuti, poi la ritorniamo.
+        return new Answer((String)a.get("text"), b); //Creiamo una nuova istanza di Answer e mettiamo i valori ottenuti, poi la ritorniamo.
     }
 }

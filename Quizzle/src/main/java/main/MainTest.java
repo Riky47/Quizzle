@@ -29,15 +29,15 @@ public class MainTest {
 		
 		new QuizzerMenu();
 		
-		Answer a = new Answer("Frocio", true, 0);
+		Answer a = new Answer("Frocio", true);
 		
 		JSONAnswer.toJson(a, "test");
 		
-		Answer b = new Answer(null, false, 0);
+		Answer b = new Answer(null, false);
 		
 		b = JSONAnswer.fromJson("test");
 		
-		Answer c = new Answer("Etero", false, 1);
+		Answer c = new Answer("Etero", false);
 		
 		b.output();
 		
