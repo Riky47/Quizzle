@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -25,6 +26,7 @@ import javax.swing.border.EmptyBorder;
 import answers.Answer;
 import main.MainTest;
 import questions.Question;
+import subjects.Subjects;
 
 @SuppressWarnings("serial")
 public class QuizzerMenu{
@@ -51,7 +53,7 @@ public class QuizzerMenu{
 	
 	JList<Question> list = new JList<Question>(MainTest.list);
 	public static DefaultListModel<Answer> answers = new DefaultListModel<Answer>();
-	JList<Answer> answersList = new JList<Answer>();
+	JList<Answer> answersList = new JList<Answer>(answers);
 	
 	public QuizzerMenu() {
         SwingUtilities.invokeLater(new Runnable() {
@@ -164,6 +166,24 @@ public class QuizzerMenu{
 	        textField.setToolTipText("Testo");
 	        JTextField pointsField = new JTextField();
 	        pointsField.setToolTipText("Punti");
+	        JComboBox<Subjects> combo = new JComboBox<Subjects>(Subjects.values());
+	        
+	        Subjects s = Subjects.MATH;
+	        
+	        MenuActionListener m = new MenuActionListener(s) {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					this.subj = (Subjects) combo.getSelectedItem();
+					
+				}
+	        	
+	        };
+	        
+	        combo.addActionListener(m);
+	        
+	        answersList = new JList(answers);
 	        
 	        JButton add = new JButton("Aggiungi");
 	        JButton addAnswer = new JButton("Aggiungi Risposta");
@@ -181,17 +201,17 @@ public class QuizzerMenu{
 						a.add(answers.getElementAt(i));
 					}
 					
-	        		Question dp = new Question(textField.getText(), Integer.parseInt(pointsField.getText()), a, null);
+	        		Question dp = new Question(textField.getText(), Integer.parseInt(pointsField.getText()), a, m.getSubject());
 	        		
 	        		textField.setText(" ");
 	        		pointsField.setText(" ");
-	        		
-	        		answersList.removeAll();
 	        		answers.clear();
+	        		
 	        		
 	        		MainTest.list.addElement(dp);
 	        		MainTest.saveDataBase();
 	        		list.updateUI();
+	        		answersList.updateUI();
 	            }
 	        });
 	        
@@ -217,16 +237,18 @@ public class QuizzerMenu{
 	        
 	        JScrollPane scrollPane = new JScrollPane();
 	        scrollPane.setViewportView(answersList);
+	        answersList.setLayoutOrientation(JList.VERTICAL);
 	        
 	        buttons.add(textField, gbc);
 	        buttons.add(pointsField, gbc);
+	        buttons.add(combo, gbc);
 	        buttons.add(scrollPane, gbc);
 	        
 	        buttons.add(addAnswer, gbc);
 	        buttons.add(add, gbc);
 	        buttons.add(exit, gbc);
 
-	        gbc.weighty = 5;
+	        gbc.weighty = 1;
 	        add(buttons, gbc);
 		}
 	}
@@ -266,7 +288,7 @@ public class QuizzerMenu{
 	        		Answer dp = new Answer(textField.getText(), correctField.isSelected());
 	        		
 	        		textField.setText(" ");
-	        		correctField.setText(" ");
+	        		correctField.setSelected(false);
 	        		
 	        		answers.addElement(dp);
 	        		MainTest.saveDataBase();
@@ -290,7 +312,7 @@ public class QuizzerMenu{
 	        buttons.add(add, gbc);
 	        buttons.add(exit, gbc);
 
-	        gbc.weighty = 5;
+	        gbc.weighty = 1;
 	        add(buttons, gbc);
 		}
 	}
@@ -461,4 +483,20 @@ public class QuizzerMenu{
 	        add(buttons, gbc);
 		}
 	}
+	
+	class MenuActionListener implements ActionListener {
+	    protected Subjects subj;
+
+	    public MenuActionListener(Subjects subj) {
+	        this.subj = subj;
+	    }
+	    
+	    public Subjects getSubject() {
+	    	return this.subj;
+	    }
+	    
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+	    }
+	};
 }

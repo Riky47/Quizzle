@@ -52,5 +52,9 @@ public class Answer{
 		System.out.println("CORRETTA: "+isCorrect());
 		System.out.println();
 	}
+	
+	public String toString() {
+		return getText()+"["+isCorrect+"]";
+	}
 
 }

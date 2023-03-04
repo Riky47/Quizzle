@@ -91,5 +91,9 @@ public class Question{
 		answers.forEach(t -> t.output());
 	}
 	
+	public String toString() {
+		return getText()+"["+getSubject()+";"+getMaxPoints()+"]";
+	}
+	
 	
 }

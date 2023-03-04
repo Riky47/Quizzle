@@ -27,8 +27,11 @@ public class MainTest {
 
 	public static void main(String[] args) throws IOException {
 		
+		loadDataBase();
+		
 		new QuizzerMenu();
 		
+		/*
 		Answer a = new Answer("Frocio", true);
 		
 		JSONAnswer.toJson(a, "test");
@@ -55,6 +58,7 @@ public class MainTest {
 		n = JSONQuestion.fromJson("test");
 		
 		n.output();
+		*/
 
 	}
 	
@@ -74,7 +78,11 @@ public class MainTest {
 		String[] ls=db.list();
 		
 		for(int i = 0; i<ls.length; i++) {
-			list.addElement(JSONQuestion.fromJson(path+sp+"Question"+sp+"QuestionN"+i));
+			File f = new File(path+sp+"Question"+sp+ls[i]);
+			String[] ls1=f.list();
+			for(int j = 0; j<ls1.length; j++) {
+				list.addElement(JSONQuestion.fromJson(ls[i]+sp+"QuestionN"+i));
+			}
 		}
 	}
 	

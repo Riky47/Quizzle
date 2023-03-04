@@ -1,5 +1,6 @@
 package questions;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -16,6 +17,8 @@ import subjects.Subjects;
 public class JSONQuestion {
 	
 static JSONCustomParser p = new JSONCustomParser("Quizzle", "Question");
+
+	static String sp = File.separator;
 	
 	/**
 	 * Trasforma una domanda in JSON.
@@ -39,7 +42,7 @@ static JSONCustomParser p = new JSONCustomParser("Quizzle", "Question");
         questionObject.put("question", questionDetails);
         
         try {
-			p.toJson(fileName, questionObject);
+			p.toJson(question.getSubject().materia+sp+fileName, questionObject);
 		} 
 		catch (IOException e) {
 			System.out.print("ERRORE SAVE: ");
