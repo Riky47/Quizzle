@@ -84,6 +84,7 @@ public class UserData {
 					num = rand.nextInt(0, subject.size());
 				}
 				
+				System.out.println(num);
 				blacklist.add(num);
 				questions.add(subject.get(num));
 			}

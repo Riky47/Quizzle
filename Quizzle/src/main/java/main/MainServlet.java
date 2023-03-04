@@ -138,7 +138,6 @@ public class MainServlet extends HttpServlet {
 				req.setAttribute(attr_subjects, subjects);
 			}
 			else {
-				System.out.println(userData.getCurrentQuestionId());
 				int questionId = userData.getCurrentQuestionId(); // Gets next question and sets the id
 				if (questionId == 0) { // Checks if user ended the quiz
 					quizPath = "recap.jsp";

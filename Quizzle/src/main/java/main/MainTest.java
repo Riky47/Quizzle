@@ -52,7 +52,7 @@ public class MainTest {
 				File f = new File(path+sp+"Question"+sp+ls[i]);
 				String[] ls1=f.list();
 				for(int j = 0; j<ls1.length; j++) {
-					list.addElement(JSONQuestion.fromJson(ls[i]+sp+"QuestionN"+i));
+					list.addElement(JSONQuestion.fromJson(ls[i]+sp+"QuestionN"+j));
 				}
 			}
 		}

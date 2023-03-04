@@ -99,7 +99,7 @@
             <input type="hidden" name="userFlag" id="userFlag" value="${userFlag}">
             <input type="hidden" name="answerFlag" id="answerFlag" value="">
 	
-			<div id="answersDiv"></div>
+			<div id="answersDiv">
 
             </div><br>
 
