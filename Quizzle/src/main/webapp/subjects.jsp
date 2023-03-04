@@ -5,6 +5,11 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Quizzle</title>
+		<style>
+			.selected {
+				background-color: #ff6666;
+			}
+		</style>
 		<script type="text/javascript">
 			window.addEventListener('load', function () {
 				var subjectsAttribute = "${subjects}" // Load and parse subjects Java vector
@@ -21,17 +26,21 @@
 				console.log(subjects)
 				subjects.forEach(function(subject) {
 					var btn = document.createElement("Button") // Create new subject button
+					btn.classList.add('non-selected')
                     btn.innerHTML = subject
 					btn.type = "button"
 					
 					var id = ++index
 					btn.onclick = function() {
 						buttons.forEach(function(button) {
-							button.style.background = ""
+							button.classList.remove('selected')
+							button.classList.remove('non-selected')
+							button.classList.add('non-selected')
 						})
 						
 						subjectFlag.value = id
-						btn.style.background = "#ff6666"
+						btn.classList.remove('non-selected')
+						btn.classList.add('selected')
 						sendButton.type = "submit"
 					}
 					

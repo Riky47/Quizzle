@@ -4,6 +4,11 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Quizzle</title>
+		<style>
+			.selected {
+				background-color: #ff6666;
+			}
+		</style>
 		<script type="text/javascript">
 			window.addEventListener('load', function () {
 				var answersAttribute = "${answers}" // Load and parse answers Java vector
@@ -20,13 +25,16 @@
 
 				answers.forEach(function(answer) {
 					var btn = document.createElement("Button") // Create new answer button
-                    btn.innerHTML = answer
+					btn.classList.add('non-selected')
+					btn.innerHTML = answer
 					btn.type = "button"
 
 					let id = ++index; // Answer id
 					btn.onclick = function() {
 						buttons.forEach(function(button) {
-							button.style.background = ""
+							button.classList.remove('selected')
+							button.classList.remove('non-selected')
+							button.classList.add('non-selected')
 						})
 
 						if (maxAnswers > 1) { // If multiple answers
@@ -62,15 +70,17 @@
 
 						    ids.forEach(function(answerId) { // Create new flag value
 								value += (value == "" ? "" : ",") + answerId
-								buttons[answerId -1].style.background = "#ff6666"
+								buttons[answerId -1].classList.remove("non-selected")
+								buttons[answerId -1].classList.add("selected")
 						    })
 
 						    answerFlag.value = value
 						}
 						else {
 							answerFlag.value = id // Change flag value
-						    btn.style.background = "#ff6666"
 						    sendButton.type = "submit"
+						    btn.classList.remove("non-selected")
+						    btn.classList.add("selected")
 						}
 					}
 					
@@ -81,7 +91,10 @@
 		</script>	
 	</head>
 	<body>	
-		<h1>${question}</h1><br>
+		<h4>Your score: ${balance}</h4>
+		<h1>${question}</h1>
+		<h3>Points: ${reward}</h3>
+		<br>
 		<form action="mainServlet">
             <input type="hidden" name="userFlag" id="userFlag" value="${userFlag}">
             <input type="hidden" name="answerFlag" id="answerFlag" value="">

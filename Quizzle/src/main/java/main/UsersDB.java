@@ -9,6 +9,8 @@ public class UsersDB {
 	private static int totQuestion;
 	
 	public static UserData getUser(String name) {
+		MainTest.loadDataBase();
+		
 		if (usersList.get(name) != null) {
 			return usersList.get(name);
 		}
