@@ -22,7 +22,7 @@ import main.MainTest;
  */
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final int totQuestion = 1;
+	private static final int totQuestion = 4;
 	
 	private final String flag_username = "userFlag";		// Login page only
 	private final String flag_answerid = "answerFlag";
@@ -138,6 +138,7 @@ public class MainServlet extends HttpServlet {
 				req.setAttribute(attr_subjects, subjects);
 			}
 			else {
+				System.out.println(userData.getCurrentQuestionId());
 				int questionId = userData.getCurrentQuestionId(); // Gets next question and sets the id
 				if (questionId == 0) { // Checks if user ended the quiz
 					quizPath = "recap.jsp";

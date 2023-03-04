@@ -79,7 +79,7 @@ public class UserData {
 			{
 				Random rand = new Random();
 				int num = -1;
-				System.out.println(subject.size());
+
 				while (num == -1 || blacklist.contains(num)) {
 					num = rand.nextInt(0, subject.size());
 				}
