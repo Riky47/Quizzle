@@ -203,8 +203,8 @@ public class QuizzerMenu{
 					
 	        		Question dp = new Question(textField.getText(), Integer.parseInt(pointsField.getText()), a, m.getSubject());
 	        		
-	        		textField.setText(" ");
-	        		pointsField.setText(" ");
+	        		textField.setText("");
+	        		pointsField.setText("");
 	        		answers.clear();
 	        		
 	        		
@@ -287,7 +287,7 @@ public class QuizzerMenu{
 					added.setVisible(true);
 	        		Answer dp = new Answer(textField.getText(), correctField.isSelected());
 	        		
-	        		textField.setText(" ");
+	        		textField.setText("");
 	        		correctField.setSelected(false);
 	        		
 	        		answers.addElement(dp);

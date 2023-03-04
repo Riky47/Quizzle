@@ -30,36 +30,6 @@ public class MainTest {
 		loadDataBase();
 		
 		new QuizzerMenu();
-		
-		/*
-		Answer a = new Answer("Frocio", true);
-		
-		JSONAnswer.toJson(a, "test");
-		
-		Answer b = new Answer(null, false);
-		
-		b = JSONAnswer.fromJson("test");
-		
-		Answer c = new Answer("Etero", false);
-		
-		b.output();
-		
-		LinkedList<Answer> ans = new LinkedList<Answer>();
-		ans.add(b);
-		ans.add(c);
-		
-		Question q = new Question("Cosa sei?", 10, ans, Subjects.MATH);
-		
-		
-		JSONQuestion.toJson(q, "test");
-		
-		Question n = Question.NULL;
-		
-		n = JSONQuestion.fromJson("test");
-		
-		n.output();
-		*/
-
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -77,11 +47,13 @@ public class MainTest {
 		File db = new File(path+sp+"Question"); //File dove leggere e scrivere i dipendenti
 		String[] ls=db.list();
 		
-		for(int i = 0; i<ls.length; i++) {
-			File f = new File(path+sp+"Question"+sp+ls[i]);
-			String[] ls1=f.list();
-			for(int j = 0; j<ls1.length; j++) {
-				list.addElement(JSONQuestion.fromJson(ls[i]+sp+"QuestionN"+i));
+		if(ls != null) {
+			for(int i = 0; i<ls.length; i++) {
+				File f = new File(path+sp+"Question"+sp+ls[i]);
+				String[] ls1=f.list();
+				for(int j = 0; j<ls1.length; j++) {
+					list.addElement(JSONQuestion.fromJson(ls[i]+sp+"QuestionN"+i));
+				}
 			}
 		}
 	}
