@@ -1,5 +1,6 @@
 package main;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -16,17 +17,19 @@ public class UserData {
 	private int totalPoints;
 	private int numOfQuests;
 	private String username;
+	private int questionTime;
 	
 	private LinkedList<Question> questions = new LinkedList<Question>();
 	private LinkedList<LinkedList<Answer>> allAnswers = new LinkedList<LinkedList<Answer>>();
 	
 	// Constructor
-	public UserData(int id, String name, int numberOfQuestions) {
+	public UserData(int id, String name, int numberOfQuestions) {	
 		userId = id;
 		subjectId = 0;
 		questionId = 1;
 		totalPoints = 0;
 		username = name;
+		questionTime = (int)(new Date().getTime()/1000);
 		numOfQuests = numberOfQuestions;
 		
 		loadQuestions();
@@ -62,31 +65,30 @@ public class UserData {
 		allAnswers.get(questId -1).add(answer);
 	}
 	
+	public void startNewQuestion() {
+		questionTime = (int)(new Date().getTime()/1000);
+	}
+	
 	public void loadQuestions() {
 		LinkedList<Question> subject = new LinkedList<Question>();
-		LinkedList<Integer> blacklist = new LinkedList<Integer>();
-		
+		LinkedList<Integer> whitelist = new LinkedList<Integer>();
+
 		for(int j = 0; j<MainTest.list.getSize(); j++) {
 			Question question = MainTest.list.getElementAt(j);
 			if (question.getSubject().ordinal() == (subjectId <= 0 ? 0 : subjectId -1)) {
+				whitelist.add(subject.size());
 				subject.add(question);
 			}
 		}
 		
-		if (subject.size() > 0) {
+		if (subject.size() >= numOfQuests) {
 			questions.clear();
+			
 			for(int i=0; i<numOfQuests; i++)
 			{
-				Random rand = new Random();
-				int num = -1;
-
-				while (num == -1 || blacklist.contains(num)) {
-					num = rand.nextInt(0, subject.size());
-				}
-				
-				System.out.println(num);
-				blacklist.add(num);
-				questions.add(subject.get(num));
+				int num = new Random().nextInt(0, whitelist.size());
+				questions.add(subject.get(whitelist.get(num)));
+				whitelist.remove(num);
 			}
 		}
 	}
@@ -115,6 +117,10 @@ public class UserData {
 		}
 		
 		return result;
+	}
+	
+	public final int getResponseTime() {
+		return (int)(new Date().getTime()/1000) - questionTime;
 	}
 	
 	public final Question getQuestionAt(int questId) {

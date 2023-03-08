@@ -48,6 +48,8 @@ public class MainTest {
 		String[] ls=db.list();
 		
 		if(ls != null) {
+			list.clear();
+			
 			for(int i = 0; i<ls.length; i++) {
 				File f = new File(path+sp+"Question"+sp+ls[i]);
 				String[] ls1=f.list();

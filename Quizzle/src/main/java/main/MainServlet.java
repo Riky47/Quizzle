@@ -22,21 +22,23 @@ import main.MainTest;
  */
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final int questionTimeout = 33;
+	private static final int questionMinTime = 3;
 	private static final int totQuestion = 4;
 	
-	private final String flag_username = "userFlag";		// Login page only
-	private final String flag_answerid = "answerFlag";
-	private final String flag_subjectid = "subjectFlag";
+	private static final String flag_username = "userFlag";		// Login page only
+	private static final String flag_answerid = "answerFlag";
+	private static final String flag_subjectid = "subjectFlag";
 	
-	private final String attr_recap = "recap";
-	private final String attr_reward = "reward";
-	private final String attr_answers = "answers";
-	private final String attr_balance = "balance";
-	private final String attr_question = "question";
-	private final String attr_subjects = "subjects";
-	private final String attr_maxanswers = "maxAnswers";
+	private static final String attr_recap = "recap";
+	private static final String attr_reward = "reward";
+	private static final String attr_answers = "answers";
+	private static final String attr_balance = "balance";
+	private static final String attr_question = "question";
+	private static final String attr_subjects = "subjects";
+	private static final String attr_maxanswers = "maxAnswers";
 	
-	private static UsersDB usersDB = new UsersDB(totQuestion);
+	private static final UsersDB usersDB = new UsersDB(totQuestion);
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -58,7 +60,6 @@ public class MainServlet extends HttpServlet {
 		int subjectId = 0;									// Selected subject
 		
 		// Get Username and User Data / Prende il nome dell'utente e i suoi dati
-		
 		if (req.getParameterMap().containsKey(flag_username) && req.getParameter(flag_username) != null) { // Checks if username is present and gets user data
 			String username = req.getParameter(flag_username); 
 			userData = usersDB.getUser(username); // Gets user data (user that called servlet)
@@ -67,7 +68,6 @@ public class MainServlet extends HttpServlet {
 		}
 		
 		// Get Subject ID / Prende la Materia
-		
 		if (req.getParameterMap().containsKey(flag_subjectid) && req.getParameter(flag_subjectid) != null) { // Checks if a new subject is selected
 			try { 
 				subjectId = Integer.parseInt(req.getParameter(flag_subjectid));
@@ -75,7 +75,6 @@ public class MainServlet extends HttpServlet {
 		}
 		
 		// Get Answer/Answers / Prende la Risposta / le Risposte
-		
 		if (req.getParameterMap().containsKey(flag_answerid) && req.getParameter(flag_answerid) != null) { // Checks if one or more answers are sent form the client
 			String value = req.getParameter(flag_answerid);
 			if (value.contains(",")) { // If multiple answers
@@ -94,11 +93,18 @@ public class MainServlet extends HttpServlet {
 		}
 		
 		if (userData != null) { // Checks if the request is referenced to a user
-			if (subjectId != 0) { // If new subject selected
+			if (subjectId != 0) // If new subject selected
 				userData.setCurrentSubjectId(subjectId); // Set user subject
-			}
 			
 			if (answersId.size() > 0) { // Checks if there is one or more answers
+				int responseTime = userData.getResponseTime(); // Gets the difference between the start time and the response
+				if (responseTime > questionMinTime) {
+					if (responseTime >= questionTimeout)
+						userData.decrementPoints(questionTimeout - questionMinTime);
+					else
+						userData.decrementPoints(responseTime - questionMinTime);
+				}
+				
 				int questionId = userData.getCurrentQuestionId(); // Gets current question id
 				if (questionId > 0) { // Checks if there is a current question
 					Question question = userData.getQuestionAt(questionId);
@@ -156,6 +162,8 @@ public class MainServlet extends HttpServlet {
 					req.setAttribute(attr_question, questionId + ". " + question.getText());
 				}
 			}
+			
+			userData.startNewQuestion(); // Sets the start time
 		}
 		
 		RequestDispatcher view = req.getRequestDispatcher((userData == null) ? "/index.jsp" : quizPath); // If there is no user data, returns default page.
