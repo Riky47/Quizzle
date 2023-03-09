@@ -13,29 +13,50 @@ import subjects.Subjects;
 public class UserData {
 	private int userId;
 	private int subjectId;
-	private int questionId;
-	private int totalPoints;
-	private int numOfQuests;
 	private String username;
-	private int questionTime;
+	private LinkedList<Integer> numOfQuests = new LinkedList<Integer>();
+	private LinkedList<Integer> questionTime = new LinkedList<Integer>();
+	private LinkedList<Integer> questionId = new LinkedList<Integer>();
+	private LinkedList<Integer> totalPoints = new LinkedList<Integer>();
 	
-	private LinkedList<Question> questions = new LinkedList<Question>();
-	private LinkedList<LinkedList<Answer>> allAnswers = new LinkedList<LinkedList<Answer>>();
+	private Map<Integer, LinkedList<Question>> questions = new LinkedHashMap<Integer, LinkedList<Question>>();
+	private Map<Integer, LinkedList<LinkedList<Answer>>> allAnswers = new LinkedHashMap<Integer, LinkedList<LinkedList<Answer>>>();
 	
 	// Constructor
 	public UserData(int id, String name, int numberOfQuestions) {	
 		userId = id;
 		subjectId = 0;
-		questionId = 1;
-		totalPoints = 0;
 		username = name;
-		questionTime = (int)(new Date().getTime()/1000);
-		numOfQuests = numberOfQuestions;
 		
-		loadQuestions();
-		for(int i=0; i<numOfQuests; i++) {
-			allAnswers.add(new LinkedList<Answer>());
+		for (int i=0; i<Subjects.values().length; i++) { // Pre-Load
+			numOfQuests.add(numberOfQuestions); // SHOULD CHANGE X EACH SUBJECT!
 		}
+		
+		loadQuestions();	
+		for (int i=0; i<Subjects.values().length; i++) { // Post-Load
+			LinkedList<LinkedList<Answer>> answers = new LinkedList<LinkedList<Answer>>();
+			
+			int tot = 0;
+			for(int j = 0; j<MainTest.list.getSize(); j++)
+				if (MainTest.list.getElementAt(j).getSubject().ordinal() == i) {
+					tot++;
+					
+					if (tot >= numOfQuests.get(i))
+						break;
+				}
+			
+			for(int j=0; j<tot; j++)
+				answers.add(new LinkedList<Answer>());
+			
+			questionId.add(1);
+			totalPoints.add(0);
+			questionTime.add((int)(new Date().getTime()/1000));
+			allAnswers.put(i, answers);
+		}
+	}
+	
+	private int getValidSubjectId() {
+		return subjectId <= 0 ? 0 : subjectId -1;
 	}
 	
 	// Sets
@@ -44,52 +65,59 @@ public class UserData {
 	}
 	public void setCurrentSubjectId(int id) {
 		subjectId = id;
-		loadQuestions();
+		// loadQuestions(); not needed anymore
 	}
 	public void setCurrentQuestionId(int id) {
+		int size = questions.get(getValidSubjectId()).size();
 		if (id < 0) id = 1;
-		else if (id > questions.size()) id = questions.size();
-		questionId = id;
+		else if (id > size) id = size;
+		questionId.set(getValidSubjectId(), id);
 	}
 	public void setUsername(String name) {
 		username = name;
 	}
 	public void incrementPoints(int points) {
-		totalPoints += points;
+		int id = getValidSubjectId();
+		totalPoints.set(id, totalPoints.get(id) + points);
 	}
 	public void decrementPoints(int points) {
-		totalPoints -= points;
+		int id = getValidSubjectId();
+		totalPoints.set(id, totalPoints.get(id) - points);
 	}
 	
 	public void addtAnswer(int questId, Answer answer) {
-		allAnswers.get(questId -1).add(answer);
+		allAnswers.get(getValidSubjectId()).get(questId -1).add(answer);
 	}
 	
 	public void startNewQuestion() {
-		questionTime = (int)(new Date().getTime()/1000);
+		questionTime.set(getValidSubjectId(), (int)(new Date().getTime()/1000));
 	}
 	
 	public void loadQuestions() {
-		LinkedList<Question> subject = new LinkedList<Question>();
-		LinkedList<Integer> whitelist = new LinkedList<Integer>();
-
-		for(int j = 0; j<MainTest.list.getSize(); j++) {
-			Question question = MainTest.list.getElementAt(j);
-			if (question.getSubject().ordinal() == (subjectId <= 0 ? 0 : subjectId -1)) {
-				whitelist.add(subject.size());
-				subject.add(question);
+		for (int i=0; i<Subjects.values().length; i++) {
+			LinkedList<Question> subject = new LinkedList<Question>();
+			LinkedList<Integer> whitelist = new LinkedList<Integer>();
+			LinkedList<Question> subQuestions = new LinkedList<Question>();
+	
+			for(int j = 0; j<MainTest.list.getSize(); j++) {
+				Question question = MainTest.list.getElementAt(j);
+				if (question.getSubject().ordinal() == i) {
+					whitelist.add(subject.size());
+					subject.add(question);
+				}
 			}
-		}
-		
-		if (subject.size() >= numOfQuests) {
-			questions.clear();
 			
-			for(int i=0; i<numOfQuests; i++)
+			for(int j=0; j<subject.size(); j++)
 			{
 				int num = new Random().nextInt(0, whitelist.size());
-				questions.add(subject.get(whitelist.get(num)));
+				subQuestions.add(subject.get(whitelist.get(num)));
 				whitelist.remove(num);
 			}
+			
+			if (subject.size() < numOfQuests.get(i))
+				System.out.println("[ WARN ]: Not enough questions is subject: " + Subjects.values()[i].materia + ", min: " + numOfQuests + ", current: " + subject.size());
+			
+			questions.put(i, subQuestions);
 		}
 	}
 	
@@ -101,18 +129,27 @@ public class UserData {
 		return subjectId;
 	}
 	public final int getCurrentQuestionId() {
-		return questionId;
+		return questionId.get(getValidSubjectId());
 	}
 	public final String getUsername() {
 		return username;
 	}
-	public final int getPoints() {
-		return totalPoints;
+	public final int getSubjectPoints() {
+		return totalPoints.get(getValidSubjectId());
+	}
+	public final int getTotalPoints() {
+		int total = 0;
+		for (int i=0; i<totalPoints.size(); i++) {
+			total += totalPoints.get(i);
+		}
+		
+		return total;
 	}
 	
 	public final int getNextQuestionId() { // Returns 0 if out of bounds
-		int result = questionId +1;
-		if (result > questions.size() || result < 0) {
+		int id = getValidSubjectId();
+		int result = questionId.get(id) +1;
+		if (result > questions.get(id).size() || result < 0) {
 			result = 0;
 		}
 		
@@ -120,31 +157,52 @@ public class UserData {
 	}
 	
 	public final int getResponseTime() {
-		return (int)(new Date().getTime()/1000) - questionTime;
+		return (int)(new Date().getTime()/1000) - questionTime.get(getValidSubjectId());
 	}
 	
 	public final Question getQuestionAt(int questId) {
+		int size = questions.get(getValidSubjectId()).size();
+		
 		if (questId < 0) questId = 1;
-		else if (questId > questions.size()) questId = questions.size();
-		return questions.get(questId -1);
+		else if (questId > size) questId = size;
+		return questions.get(getValidSubjectId()).get(questId -1);
 	}
 	
-	public final Map<Integer, Map<String, Map<String, Boolean>>> getRecap() {
-		Map<Integer, Map<String, Map<String, Boolean>>> recap = new LinkedHashMap<Integer, Map<String, Map<String, Boolean>>>();
+	public final Map<String, Map<Integer, Map<String, Map<String, Boolean>>>> getAnswersRecap() {
+		Map<String, Map<Integer, Map<String, Map<String, Boolean>>>> recap = new LinkedHashMap<String, Map<Integer, Map<String, Map<String, Boolean>>>>();
 		
-		int questionId = 1;		
-		for (LinkedList<Answer> answers : allAnswers) {
-			Map<String, Map<String, Boolean>> questionData = new LinkedHashMap<String, Map<String, Boolean>>();			
-			Map<String, Boolean> answersData = new LinkedHashMap<String, Boolean>();
+		int questionId = 1;
+		for (int i=0; i<allAnswers.size(); i++) {
+			Map<Integer, Map<String, Map<String, Boolean>>> subjectQuestions = new LinkedHashMap<Integer, Map<String, Map<String, Boolean>>>();
 			
-			for (Answer answer : answers) {
-				answersData.put(answer.getText(), answer.isCorrect());
+			for (LinkedList<Answer> answers : allAnswers.get(i)) {
+				if (answers.size() > 0) {
+					Map<String, Map<String, Boolean>> questionData = new LinkedHashMap<String, Map<String, Boolean>>();			
+					Map<String, Boolean> answersData = new LinkedHashMap<String, Boolean>();
+					
+					for (Answer answer : answers) {
+						answersData.put(answer.getText(), answer.isCorrect());
+					}
+					
+					questionData.put(this.getQuestionAt(questionId).getText(), answersData);
+					subjectQuestions.put(questionId++, questionData);
+				}	
 			}
 			
-			questionData.put(this.getQuestionAt(questionId).getText(), answersData);
-			recap.put(questionId++, questionData);
+			recap.put(Subjects.values()[i].materia, subjectQuestions);
 		}
 		
 		return recap;
+	}
+	
+	public final Map<String, Integer> getPointsRecap() {
+		Map<String, Integer> recap = new LinkedHashMap<String, Integer>();
+		
+		for (int i=0; i<totalPoints.size(); i++) {
+			recap.put(Subjects.values()[i].materia, totalPoints.get(i));
+		}
+		
+		return recap;
+		
 	}
 }

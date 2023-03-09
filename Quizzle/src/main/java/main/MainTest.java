@@ -35,12 +35,23 @@ public class MainTest {
 	@SuppressWarnings("unchecked")
 	public static void saveDataBase() {
 		LinkedList<Question> a = new LinkedList<Question>();
+		LinkedList<Integer> indexes = new LinkedList<Integer>();
+		
+		for(int i = 0; i<Subjects.values().length; i++) {
+			indexes.add(0);
+		}
 		
 		for(int i = 0; i<list.getSize(); i++) {
 			a.add(list.getElementAt(i));
 		}
 		
-		a.forEach(t -> JSONQuestion.toJson(t, "QuestionN"+a.indexOf(t)));
+		a.forEach(t -> {
+			int id = t.getSubject().ordinal();
+			int index = indexes.get(id);
+			indexes.set(id, index +1);
+			
+			JSONQuestion.toJson(t, "QuestionN"+index);
+		});
 	}
 	
 	public static void loadDataBase() {

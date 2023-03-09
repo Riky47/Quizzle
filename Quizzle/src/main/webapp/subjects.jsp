@@ -23,7 +23,6 @@
 				var buttons = [] // Stores the buttons
 				var index = 0
 				
-				console.log(subjects)
 				subjects.forEach(function(subject) {
 					var btn = document.createElement("Button") // Create new subject button
 					btn.classList.add('non-selected')
@@ -52,7 +51,7 @@
 	</head>
 
 	<body>
-		<h1>Quiz</h1><br>
+		<h1>Subject:</h1><br>
 		<form action="mainServlet">
 			<input type="hidden" name="userFlag" id="userFlag" value="${userFlag}">
 			<input type="hidden" name="subjectFlag" id="subjectFlag" value="">

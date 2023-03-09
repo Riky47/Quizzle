@@ -91,9 +91,8 @@
 		</script>	
 	</head>
 	<body>	
-		<h4>Your score: ${balance}</h4>
 		<h1>${question}</h1>
-		<h3>Points: ${reward}</h3>
+		<h3>Max reward: ${reward}</h3>
 		<br>
 		<form action="mainServlet">
             <input type="hidden" name="userFlag" id="userFlag" value="${userFlag}">

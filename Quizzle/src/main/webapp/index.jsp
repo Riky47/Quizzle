@@ -26,8 +26,14 @@
 		<h1>Quiz</h1><br>
 		<form action="mainServlet">
 			<input type="text" name="userFlag" id="userbox" placeholder="Username">
+			<input type="hidden" name="forceFlag" id="forcePage" value="subjects">
 			
 			<button type="button" id="sendButton">Start</button>
+		</form><br>
+		
+		<form action="mainServlet">
+			<input type="hidden" name="forceFlag" id="forcePage" value="leaderboard">
+			<button type="submit" id="sendButton">Leaderboard</button>
 		</form>
 	</body>
 </html>
