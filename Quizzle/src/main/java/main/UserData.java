@@ -191,7 +191,7 @@ public class UserData {
 		return (int)(new Date().getTime()/1000) - questionTime.get(getValidSubjectId());
 	}
 	/**
-	 * Ritorna la domanda all'indice indicato.
+	 * Ritorna la domanda all'indice indicato
 	 */
 	public final Question getQuestionAt(int questId) {
 		int size = questions.get(getValidSubjectId()).size();

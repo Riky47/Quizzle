@@ -27,7 +27,7 @@ public class MainServlet extends HttpServlet {
 	private static final int questionMinTime = 3;
 	private static final int totQuestion = 4;
 	
-	private static final String flag_username = "userFlag";		// Login page only / solo per la pagina del login.
+	private static final String flag_username = "userFlag";		// Login page only / solo per la pagina del login
 	private static final String flag_answerid = "answerFlag";
 	private static final String flag_forcepage = "forceFlag";
 	private static final String flag_subjectid = "subjectFlag";
