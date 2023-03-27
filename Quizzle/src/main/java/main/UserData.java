@@ -22,7 +22,9 @@ public class UserData {
 	private Map<Integer, LinkedList<Question>> questions = new LinkedHashMap<Integer, LinkedList<Question>>();
 	private Map<Integer, LinkedList<LinkedList<Answer>>> allAnswers = new LinkedHashMap<Integer, LinkedList<LinkedList<Answer>>>();
 	
-	// Constructor
+	/**
+	 * Costruttore, prende l'id del'utente, lo username e il numero di risposte
+	 */
 	public UserData(int id, String name, int numberOfQuestions) {	
 		userId = id;
 		subjectId = 0;
@@ -55,44 +57,71 @@ public class UserData {
 		}
 	}
 	
+	/**
+	 * Ritorna un SubjectId valido
+	 */
 	private int getValidSubjectId() {
 		return subjectId <= 0 ? 0 : subjectId -1;
 	}
 	
 	// Sets
+	/**
+	 * Imposta L'id dell'utente
+	 */
 	public void setUserId(int id) {
 		userId = id;
 	}
+	/**
+	 * Imposta L'id della materia
+	 */
 	public void setCurrentSubjectId(int id) {
 		subjectId = id;
 		// loadQuestions(); not needed anymore
 	}
+	/**
+	 * Imposta L'id della domanda
+	 */
 	public void setCurrentQuestionId(int id) {
 		int size = questions.get(getValidSubjectId()).size();
 		if (id < 0) id = 1;
 		else if (id > size) id = size;
 		questionId.set(getValidSubjectId(), id);
 	}
+	/**
+	 * Imposta L'username dell'utente
+	 */
 	public void setUsername(String name) {
 		username = name;
 	}
+	/**
+	 * Incrementa i punti
+	 */
 	public void incrementPoints(int points) {
 		int id = getValidSubjectId();
 		totalPoints.set(id, totalPoints.get(id) + points);
 	}
+	/**
+	 * diminuisce i punti
+	 */
 	public void decrementPoints(int points) {
 		int id = getValidSubjectId();
 		totalPoints.set(id, totalPoints.get(id) - points);
 	}
-	
+	/**
+	 * Aggiunge una risposta data
+	 */
 	public void addtAnswer(int questId, Answer answer) {
 		allAnswers.get(getValidSubjectId()).get(questId -1).add(answer);
 	}
-	
+	/**
+	 * Inizia una nuova domanda
+	 */
 	public void startNewQuestion() {
 		questionTime.set(getValidSubjectId(), (int)(new Date().getTime()/1000));
 	}
-	
+	/**
+	 * Carica una domanda
+	 */
 	public void loadQuestions() {
 		for (int i=0; i<Subjects.values().length; i++) {
 			LinkedList<Question> subject = new LinkedList<Question>();
@@ -155,11 +184,15 @@ public class UserData {
 		
 		return result;
 	}
-	
+	/**
+	 * Ritorna il tempo di risposta
+	 */
 	public final int getResponseTime() {
 		return (int)(new Date().getTime()/1000) - questionTime.get(getValidSubjectId());
 	}
-	
+	/**
+	 * Ritorna la domanda all'indice indicato
+	 */
 	public final Question getQuestionAt(int questId) {
 		int size = questions.get(getValidSubjectId()).size();
 		
@@ -167,7 +200,9 @@ public class UserData {
 		else if (questId > size) questId = size;
 		return questions.get(getValidSubjectId()).get(questId -1);
 	}
-	
+	/**
+	 * Crea il recap del quiz
+	 */
 	public final Map<String, Map<Integer, Map<String, Map<String, Boolean>>>> getAnswersRecap() {
 		Map<String, Map<Integer, Map<String, Map<String, Boolean>>>> recap = new LinkedHashMap<String, Map<Integer, Map<String, Map<String, Boolean>>>>();
 		
@@ -194,7 +229,9 @@ public class UserData {
 		
 		return recap;
 	}
-	
+	/**
+	 * Ritorna i punti fatti nel quiz
+	 */
 	public final Map<String, Integer> getPointsRecap() {
 		Map<String, Integer> recap = new LinkedHashMap<String, Integer>();
 		
