@@ -26,6 +26,7 @@ static JSONCustomParser p = new JSONCustomParser("Quizzle", "Question");
 	 * @param question
 	 * @param fileName
 	 */
+	@SuppressWarnings("unchecked")
 	public static void toJson(Question question, String fileName) {
 		
 		JSONObject questionDetails = new JSONObject();
@@ -55,31 +56,23 @@ static JSONCustomParser p = new JSONCustomParser("Quizzle", "Question");
 	 * 
 	 * @param fileName
 	 */
+	@SuppressWarnings("unchecked")
 	public static Question fromJson(String fileName) {
-		return parseQuestionObject(p.fromJson(fileName)); //Chiama il metodo sottostante e ritorna la risposta.
-	}
-
-	/**
-	 * Trasforma un JSONObject in Answer
-	 * 
-	 * @param answerObject
-	 */
-	private static Question parseQuestionObject(JSONObject answerObject) {
-        JSONObject a = (JSONObject) answerObject.get("question"); //Prendo l'oggetto "question" dal file JSON.
+		JSONObject question = (JSONObject) p.fromJson(fileName).get("question"); //Prendo l'oggetto "question" dal file JSON.
         
-        String maxPoints = ""+a.get("maxPoints"); //Prendo la variabile "maxPoints" dal JSON e la casto a String.
+        String maxPoints = ""+question.get("maxPoints"); //Prendo la variabile "maxPoints" dal JSON e la casto a String.
         
         int p = Integer.parseInt(maxPoints); //Avendo castato a String possiamo parsare a int.
         
-        String m = (String) a.get("subject");
+        String m = (String) question.get("subject");
         
-        Object obj = a.get("answers");
-        JSONArray ar = (JSONArray) obj;
+        Object obj = question.get("answers");
+        JSONArray array = (JSONArray) obj;
         
         LinkedList<Answer> ans = new LinkedList<Answer>();
-        ar.forEach(t -> ans.add(JSONAnswer.parseAnswerObject((JSONObject)t)));
+        array.forEach(q -> ans.add(JSONAnswer.parseAnswerObject((JSONObject)q)));
         
-        return new Question((String)a.get("text"), p, ans, Subjects.valueOf(m)); //Creiamo una nuova istanza di Question e mettiamo i valori ottenuti, poi la ritorniamo.
-    }
+        return new Question((String)question.get("text"), p, ans, Subjects.valueOf(m)); //Creiamo una nuova istanza di Question e mettiamo i valori ottenuti, poi la ritorniamo.
+	}
 
 }

@@ -28,10 +28,19 @@ public class MainTest {
 	public static void main(String[] args) throws IOException {
 		
 		loadDataBase();
-		
-		new QuizzerMenu();
+		/*
+		 * QuizzerMenu avvia il processo per la Java Application, mostrando anche l'interfaccia grafica.
+		 * 
+		 * QuizzerMenu non è una classe completa ed è da riordinare, per favore non modificate NULLA.
+		*/
+		new QuizzerMenu(); 
 	}
 	
+	
+	/**
+	 * Il metodo saveDataBase() salva tutte le domande in file JSON
+	 * nella cartella della propria materia.
+	 */
 	@SuppressWarnings("unchecked")
 	public static void saveDataBase() {
 		LinkedList<Question> a = new LinkedList<Question>();
@@ -54,8 +63,13 @@ public class MainTest {
 		});
 	}
 	
+	
+	/**
+	 * Il metodo loadDataBase() inizializza il database, caricando tutti i file JSON
+	 * in una LinkedList.
+	 */
 	public static void loadDataBase() {
-		File db = new File(path+sp+"Question"); //File dove leggere e scrivere i dipendenti
+		File db = new File(path+sp+"Question"); //Cartella dove leggere e scrivere i dipendenti
 		String[] ls=db.list();
 		
 		if(ls != null) {
@@ -71,6 +85,13 @@ public class MainTest {
 		}
 	}
 	
+	
+	/**
+	 * Il metodo root() trova la cartella principale dell'hardisk su cui ci troviamo.
+	 * Esempio: C: , Z: , ecc...
+	 * 
+	 * @return Nome della cartella principale
+	 */
 	public static String root(){
 		File file = new File(".").getAbsoluteFile();
 		File root = file.getParentFile();
