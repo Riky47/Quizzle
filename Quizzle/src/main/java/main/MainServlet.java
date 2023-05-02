@@ -150,6 +150,10 @@ public class MainServlet extends HttpServlet {
 					req.setAttribute(attr_leaderboard, new JSONObject(usersDB.getLeaderboard()).toJSONString());
 					break;
 				}
+				case "index": {	// Log out
+					quizPath = "/index.jsp";
+					break;
+				}
 				default: {
 					if (subjectId == 0 || forcePage.equals("subjects")) { // If there is no subject selected / se non ci sono materie selezionate
 						Vector<String> subjects = new Vector<String>();
