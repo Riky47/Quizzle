@@ -122,7 +122,7 @@ public class MainServlet extends HttpServlet {
 						
 						for (int answerId : answersId) { // Repeats for each answer from the client / Ripete per ogni domanda
 							Answer answer = question.getAnswers().get(answerId -1);
-							userData.addtAnswer(questionId, answer);
+							userData.addAnswer(questionId, answer);
 							
 							if (answer.isCorrect()) {
 								earnedPoints += question.getMaxPoints() / answersId.size(); // Set points / Aggiunge i punti

@@ -38,7 +38,7 @@ public class UserData {
 		for (int i=0; i<Subjects.values().length; i++) { // Post-Load
 			LinkedList<LinkedList<Answer>> answers = new LinkedList<LinkedList<Answer>>();
 			
-			int tot = 0;
+			/*int tot = 0;
 			for(int j = 0; j<MainTest.list.getSize(); j++)
 				if (MainTest.list.getElementAt(j).getSubject().ordinal() == i) {
 					tot++;
@@ -48,7 +48,11 @@ public class UserData {
 				}
 			
 			for(int j=0; j<tot; j++)
-				answers.add(new LinkedList<Answer>());
+				answers.add(new LinkedList<Answer>());*/
+			
+			for (int j = 0; j < questions.size(); j++)
+				for (int l = 0; l < questions.get(j).size(); l++)
+					answers.add(new LinkedList<Answer>());
 			
 			questionId.add(1);
 			totalPoints.add(0);
@@ -110,7 +114,14 @@ public class UserData {
 	/**
 	 * Aggiunge una risposta data
 	 */
-	public void addtAnswer(int questId, Answer answer) {
+	public void addAnswer(int questId, Answer answer) {
+		int size = allAnswers.get(getValidSubjectId()).size();
+		
+		if (questId < 0) questId = 1;
+		else if (questId > size) {
+			System.out.println("Max answers limit reached for this subject: " + getValidSubjectId());
+			questId = size;
+		}
 		allAnswers.get(getValidSubjectId()).get(questId -1).add(answer);
 	}
 	/**
@@ -144,7 +155,7 @@ public class UserData {
 			}
 			
 			if (subject.size() < numOfQuests.get(i))
-				System.out.println("[ WARN ]: Not enough questions is subject: " + Subjects.values()[i].materia + ", min: " + numOfQuests + ", current: " + subject.size());
+				System.out.println("[ WARN ]: Not enough questions in subject: " + Subjects.values()[i].materia + ", min: " + numOfQuests + ", current: " + subject.size());
 			
 			questions.put(i, subQuestions);
 		}
@@ -216,10 +227,10 @@ public class UserData {
 					Map<String, Boolean> answersData = new LinkedHashMap<String, Boolean>();
 					
 					for (Answer answer : answers) {
-						answersData.put(answer.getText(), answer.isCorrect());
+						answersData.put(answer.getText().replace('"', '\''), answer.isCorrect());
 					}
 					
-					questionData.put(this.getQuestionAt(questionId).getText(), answersData);
+					questionData.put(this.getQuestionAt(questionId).getText().replace('"', '\''), answersData);
 					subjectQuestions.put(questionId++, questionData);
 				}	
 			}

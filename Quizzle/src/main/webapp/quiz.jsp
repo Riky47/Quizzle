@@ -1,23 +1,102 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
+	<meta name="viewport" content="vidth=device=vidth, initial-scale=0.9">
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Quizzle</title>
+		
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+		
 		<style>
-			.selected {
-				background-color: #ff6666;
+			#answersDiv{
+				text-align: center;
+			}
+			
+			body{
+				background-color:  #FFFFFF;
+				background-image: linear-gradient(#00b3ff,#00509C);
+				background-repeat: no-repeat;
+				text-align: center;
+			}
+			
+			:root{
+				touch-action: pan-x pan-y;
+				height: 100%
+			}
+			
+			#Quizzle{
+				text-align: center;
+				font-size: 40px;
+				color: white;
+				text-decoration-line:underline;
+				text-shadow: 8px -8px 10px black;
+				font-family: Garamond;
+				}
+			
+			h2{
+				font-family:garamond;
+				padding: 15px 60px;
+				text-align: center;
+				color: #022d4a;
+				font-size: 30px;
+			}
+				
+			h3{
+				color: #022d4a;
+				font-family:garamond;
+				text-align: center;
+			}
+			
+			button{
+				box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+				color: #ffffff;
+				background-color:  #0072be;
+				display: inline-block;
+  				padding: 15px 25px;
+ 				font-size: 24px;
+ 				cursor: pointer;
+				text-align: center;
+			    border-radius: 8px;
+			    margin: 20px 60px;
+			    border: 2px solid white;
+			    text-align: center;
+			}
+			
+			button:hover {
+			background-color: #189cde;
+			}
+			
+			button:active {
+				box-shadow: 0 0px 0;
+ 				background-color: #022d4a;
+ 				transform: translateY(4px);
+ 				 
+ 			}
+ 			
+ 			#sendButton{
+ 				background-color: #FFFFFF;
+ 				border: 2px solid #0072be;
+ 				color: #0072be;
+ 				border-radius: 60px;
+ 			}
+			
+			.selected{
+				background-color: #022d4a;
+			}
+			
+			.pulsante{
+				text-align: center;
 			}
 		</style>
 		<script type="text/javascript">
 			window.addEventListener('load', function () {
-				var answersAttribute = "${answers}" // Load and parse answers Java vector
+				var answersAttribute = `${answers}` // Load and parse answers Java vector
 				answersAttribute = answersAttribute.replace("[", "")
 				answersAttribute = answersAttribute.replace("]", "")
 
 				var index = 0
 				var buttons = [] // Stores answers buttons
-				var maxAnswers = "${maxAnswers}" // Load maxAnswers Java integer
+				var maxAnswers = `${maxAnswers}` // Load maxAnswers Java integer
 				var answers = answersAttribute.split(",") // Parse
 				var answersDiv = document.getElementById("answersDiv")
 				var answerFlag = document.getElementById("answerFlag")
@@ -25,7 +104,7 @@
 
 				answers.forEach(function(answer) {
 					var btn = document.createElement("Button") // Create new answer button
-					btn.classList.add('non-selected')
+					btn.classList.add("pulsante")
 					btn.innerHTML = answer
 					btn.type = "button"
 
@@ -91,8 +170,11 @@
 		</script>	
 	</head>
 	<body>	
-		<h1>${question}</h1>
+		<div id="Quizzle">
+		<h1> Quizzle </h1>
+		</div>
 		<h3>Max reward: ${reward}</h3>
+		<h2>${question}</h2>
 		<br>
 		<form action="mainServlet">
             <input type="hidden" name="userFlag" id="userFlag" value="${userFlag}">
@@ -101,7 +183,6 @@
 			<div id="answersDiv">
 
             </div><br>
-
             <button type="button" id="sendButton">Send</button>
 		</form>
 	</body>

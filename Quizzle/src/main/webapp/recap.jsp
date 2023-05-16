@@ -2,22 +2,97 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="ISO-8859-1">
+	<link rel="icon" type="image/x-icon" href="b.png">
+	</head>
+		<meta charset="ISO-8859-1"  content="width=device-width, initial-scale=1">
 		<title>Quizzle</title>
 		<style>
-			.correct-answer {
-				color: #4fb355;
+		
+			form{
+				text-alling: center;
 			}
-			.wrong-answer {
-				color: #ff6666;
+			
+			#Quizzle{
+				text-aling: center;
+				font-size: 40px;
+				color: white;
+				text-decoration-line: underline;
+				text-shadow: 8px -8px 10px black;
+				font-family: Garamond;
 			}
-			.selected {
-				background-color: #ff6666;
+			body{
+				background: #00509C; 
+				background-repeat: no-repeat;
+	  			background-image: linear-gradient(#00B3FF, #00509C);
+	 			background-size: cover;
+			}
+			
+			:root{
+			touch-action:pan-x pan-y;
+			height: 100%
+			}
+			
+			h1{color: white}
+			
+			h2{color: black}
+			
+			h3{color: black}
+			
+			ul{color: black}
+			
+			button{
+				color: white;
+				font-family: Garamond;  	
+				padding: 16px 30px;
+				text-align: center;
+				background-color: #0072be;
+				border-radius: 10px; 
+				cursor: pointer;
+				border: black;
+				display: inline-block;
+				font-size: 16px;
+				border: 1px solid black;
+				margin-right: 10px;
+			}
+			
+			.button1{
+				padding: 8px 15px;
+			}
+			
+			.button:hover{
+				box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.24), 0 10px 25px 0
+					rgba(0, 0, 0, 0.19);
+			}
+						
+			form{
+				text-align: center;
+			}
+			
+			.correct-answer {color: #4fb355;}
+			
+			.wrong-answer {color: #ff2222;}
+			
+			.selected {background-color: #b3b3b3;}
+			
+			.recap{
+			color: #0072be;
+			text-align: center;
+			font-family: Garamond;
+			}
+		
+			#recapDiv{
+			margin: 200px 500px 300px  500px;
+			border: 2px;
+			padding: 5px;
+			background: white;
+			border-radius: 25px;
+			box-shadow: 15px 24px 24px o rgba(0, 0, 0, 0.24), 0 15px 35px
 			}
 		</style>
+		
 		<script type="text/javascript">	
-			var answersRecap = JSON.parse('${answersRecap}')
-			var pointsRecap = JSON.parse('${pointsRecap}')
+			var answersRecap = JSON.parse(`${answersRecap}`)
+			var pointsRecap = JSON.parse(`${pointsRecap}`)
 		
 			function space() {
 				var space = document.createElement("br")
@@ -121,9 +196,13 @@
 		</script>
 	</head>
 	<body>	
+		<div id="Quizzle">
+		<h1> Quizzle </h1>
+		</div>
 		<h1>Final score: ${balance}</h1>
 		<br>
 		<form action="mainServlet">
+					
 			<input type="hidden" name="userFlag" id="userFlag" value="${userFlag}">
 			<input type="hidden" name="forceFlag" id="forcePage" value="subjects">
 			<div id="subjectsDiv">
