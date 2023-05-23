@@ -3,7 +3,7 @@ package subjects;
 public enum Subjects {
 	
 	MATH("Matematica"),
-	HISTORY("Storia"),
+	// HISTORY("Storia"),
 	MECHANIC("Meccanica"),
 	INFO("Informatica"),
 	ITALIAN("Italiano");
