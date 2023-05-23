@@ -87,20 +87,13 @@ text-shadow:none;
 rgba(0, 0, 0.19);
 }
 
-
-
-.selected:active {
-  background-color: #3e8e41;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
 .non-selected {
    color:white;
   font-family: Garamond;
   padding:8px 20px;
   text-align:center;
   border-radius: 25px;
-  background-color:#0072be;
+  background-color: #022d4a;
   cursor:pointer;
      margin: 0 auto;
   
@@ -108,14 +101,6 @@ rgba(0, 0, 0.19);
 
 .non-selected:hover {box-shadow: 0 6px 8px 0 rgba;
 rgba(0, 0, 0.19);}
-
-
-
-.non-selected:active {
-  background-color: #3e8e41;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
 
 	</style>
 		<script type="text/javascript">
