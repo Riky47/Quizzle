@@ -176,7 +176,7 @@ public class MainServlet extends HttpServlet {
 							Question question = userData.getQuestionAt(questionId);
 							Vector<String> answersList = new Vector<String>();
 							
-							question.getAnswers().forEach(answer -> answersList.add(answer.getText())); // Gets answers from the questions / prende le risposte dalle domande
+							question.getAnswers().forEach(answer -> answersList.add(answer.getText().replace(',', ';'))); // Gets answers from the questions / prende le risposte dalle domande
 							
 							quizPath = "/quiz.jsp";	// Question Preset / preset delle domande
 							req.setAttribute(attr_answers, answersList); // Sets all possible answers / Mette tutte le possibili risposte

@@ -25,6 +25,7 @@
 				background-repeat: no-repeat;
 	  			background-image: linear-gradient(#00B3FF, #00509C);
 	 			background-size: cover;
+	 			text-align: center;
 			}
 			
 			:root{
@@ -41,28 +42,34 @@
 			ul{color: black}
 			
 			button{
-				color: white;
-				font-family: Garamond;  	
-				padding: 16px 30px;
-				text-align: center;
-				background-color: #0072be;
-				border-radius: 10px; 
-				cursor: pointer;
-				border: black;
+				box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+				color: #ffffff;
+				background-color:  #0072be;
 				display: inline-block;
-				font-size: 16px;
-				border: 1px solid black;
-				margin-right: 10px;
+  				padding: 15px 25px;
+ 				font-size: 24px;
+ 				cursor: pointer;
+				text-align: center;
+			    border-radius: 8px;
+			    margin: 20px 60px;
+			    border: 2px solid white;
+			    text-align: center;
 			}
 			
 			.button1{
 				padding: 8px 15px;
 			}
 			
-			.button:hover{
-				box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.24), 0 10px 25px 0
-					rgba(0, 0, 0, 0.19);
+			button:hover {
+			background-color: #189cde;
 			}
+			
+			button:active {
+				box-shadow: 0 0px 0;
+ 				background-color: #022d4a;
+ 				transform: translateY(4px);
+ 				 
+ 			}
 						
 			form{
 				text-align: center;
@@ -72,7 +79,9 @@
 			
 			.wrong-answer {color: #ff2222;}
 			
-			.selected {background-color: #b3b3b3;}
+			.selected{
+				background-color: #022d4a;
+			}
 			
 			.recap{
 			color: #0072be;
@@ -81,12 +90,17 @@
 			}
 		
 			#recapDiv{
-			margin: 200px 500px 300px  500px;
+			margin: 200px 300px 300px 300px;
 			border: 2px;
 			padding: 5px;
 			background: white;
 			border-radius: 25px;
-			box-shadow: 15px 24px 24px o rgba(0, 0, 0, 0.24), 0 15px 35px
+			box-shadow: 15px 24px 24px o rgba(0, 0, 0, 0.24), 0 15px 35px;
+			text-align: left;
+			}
+			
+			.subject {
+			text-align: center;
 			}
 		</style>
 		
